@@ -1,8 +1,4 @@
 defmodule ExBrackets do
-  @moduledoc """
-  Documentation for ExBrackets.
-  """
-
 
   def check(str) when is_binary(str) do
     str
@@ -11,9 +7,12 @@ defmodule ExBrackets do
   end
   def check(_), do: false
 
-  defp _check([")" | _], {0, 0}), do: false
-  defp _check(["(" | tail], {0, 0}) do
-    _check(tail, {1, 0})
+  defp _check([head | tail], {0, 0} = state) do
+    case head do
+      "(" -> _check(tail, {1, 0})
+      ")" -> false
+      _ ->  _check(tail, state)
+    end
   end
 
   defp _check([head | tail], {open, closed} = state) when open >= 1 do

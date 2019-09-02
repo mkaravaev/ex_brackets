@@ -13,8 +13,12 @@ defmodule ExBracketsTest do
     test "should return false if unbalanced" do
       str1 = ")(abcdifghigklmonop)"
       str2 = "(((abcdifghigklmonop))"
+      str3 = "())"
+      str4 = ")("
       assert ExBrackets.check(str1) == false
       assert ExBrackets.check(str2) == false
+      assert ExBrackets.check(str3) == false
+      assert ExBrackets.check(str4) == false
     end
 
   end
