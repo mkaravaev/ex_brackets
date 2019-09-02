@@ -19,7 +19,6 @@ defmodule ExBracketsTest do
       Enum.map(@true_input, &(
         assert ExBrackets.check(&1) == true
       ))
-
     end
 
     test "should return false if unbalanced" do
