@@ -1,5 +1,6 @@
 defmodule ExBrackets do
 
+  @spec check(String.t()) :: boolean()
   def check(str) when is_binary(str) do
     str
     |> String.codepoints()
