@@ -17,10 +17,12 @@ defmodule ExBracketsTest do
       str2 = "(((abcdifghigklmonop))"
       str3 = "())"
       str4 = ")"
+      str5 = ""
       assert ExBrackets.check(str1) == false
       assert ExBrackets.check(str2) == false
       assert ExBrackets.check(str3) == false
       assert ExBrackets.check(str4) == false
+      assert ExBrackets.check(str5) == false
     end
 
   end

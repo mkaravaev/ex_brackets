@@ -8,6 +8,10 @@ defmodule ExBrackets do
   end
   def check(_), do: false
 
+  defp _check([], {0, _closed}), do: false
+  defp _check([], {open, closed}) do
+    open == closed
+  end
   defp _check([head | tail], {0, 0} = state) do
     case head do
       "(" -> _check(tail, {1, 0})
@@ -22,9 +26,6 @@ defmodule ExBrackets do
       ")" -> _check(tail, {open, closed+1})
       _ -> _check(tail, state)
     end
-  end
-  defp _check([], {open, closed}) do
-    open == closed
   end
 
 end
