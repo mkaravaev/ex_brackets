@@ -1,33 +1,20 @@
 defmodule ExBrackets do
+  alias ExBrackets.{File, String}
 
-  @spec check(String.t()) :: boolean()
-  def check(str) when is_binary(str) do
-    str
-    |> String.codepoints()
-    |> _check({0, 0})
+  def file_balanced?(path) do
+    path
+    |> File.process()
+    |> is_balanced?()
   end
-  def check(_), do: false
 
-  defp _check([], {0, _closed}), do: false
+  def string_balanced?(input) do
+    input
+    |> String.process()
+    |> is_balanced?()
+  end
 
-  defp _check([], {open, closed}) do
+  def is_balanced?(%{open_count: 0}), do: false
+  def is_balanced?(%{open_count: open, closed_count: closed}) do
     open == closed
   end
-
-  defp _check([head | tail], {0, 0} = state) do
-    case head do
-      "(" -> _check(tail, {1, 0})
-      ")" -> false
-      _ ->  _check(tail, state)
-    end
-  end
-
-  defp _check([head | tail], {open, closed} = state) when open >= 1 do
-    case head do
-      "(" -> _check(tail, {open+1, closed})
-      ")" -> _check(tail, {open, closed+1})
-      _ -> _check(tail, state)
-    end
-  end
-
 end
