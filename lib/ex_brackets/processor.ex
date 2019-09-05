@@ -31,5 +31,42 @@ defmodule ExBrackets.Processor do
   defstruct [open_count: 0, closed_count: 0]
 
   @callback process(String.t()) :: Processor.t()
-  @callback calculate(String.t(), Processor.t()) :: Processor.t()
+  @callback success_response(Processor.t()) :: any()
+  @callback failed_response(Processor.t()) :: any()
+
+  def calculate(str, count \\ @count, mod) when is_binary(str) do
+    str
+    |> String.codepoints()
+    |> _calculate(count, mod)
+  end
+  def calculate(_, count, mod), do: mod.failed_response(count)
+
+  defp _calculate([], %{open_count: 0} = count, mod) do
+    mod.failed_response(count)
+  end
+
+  defp _calculate([], count, mod) do
+    mod.success_response(count)
+  end
+
+  defp _calculate([head | tail], %{open_count: 0} = count, mod) do
+    case head do
+      "(" -> _calculate(tail, add_map(count, :open_count), mod)
+      ")" -> mod.failed_response(count)
+      _ ->  _calculate(tail, count, mod)
+    end
+  end
+
+  defp _calculate([head | tail], %{open_count: open} = count, mod) when open >= 1 do
+    case head do
+      "(" -> _calculate(tail, add_map(count, :open_count), mod)
+      ")" -> _calculate(tail, add_map(count, :closed_count), mod)
+      _ -> _calculate(tail, count, mod)
+    end
+  end
+
+  defp add_map(count, key) do
+    Map.update!(count, key, &(&1+1))
+  end
+
 end
