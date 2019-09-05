@@ -1,21 +1,19 @@
 # ExBrackets
 
-**TODO: Add description**
+This program determines if brackets in string is balanced:
 
-## Installation
+A bracket is considered to be any one of the following characters: ( or ).
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `ex_brackets` to your list of dependencies in `mix.exs`:
+Two brackets are considered to be a matched pair if the opening bracket ( occurs to the left of a closing bracket ). 
 
-```elixir
-def deps do
-  [
-    {:ex_brackets, "~> 0.1.0"}
-  ]
-end
-```
+A matching pair of brackets is not balanced if the set of brackets it encloses are not matched. For example, )()( or ()) are not balanced.
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/ex_brackets](https://hexdocs.pm/ex_brackets).
+Input Format
 
+String containing any characters, not limited by size.
+
+Output Format
+
+If a string is balanced, return true. Otherwise, return false.
+
+Accepts String and Files
