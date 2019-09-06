@@ -5,13 +5,14 @@ defmodule ExBracketsTest do
         "(((abcdifghigklmonop))",
         "())",
         ")",
-        ""
+        "())(",
       ]
 
   @true_input [
     "(abcdifghigklmonop)",
     "(((abcdifghigklmonop)))",
-    "()"
+    "()",
+    ""
   ]
 
   describe "&string_balanced?/1" do
