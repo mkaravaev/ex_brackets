@@ -34,7 +34,8 @@ defmodule ExBrackets.Processor do
   @callback success_response(Processor.t()) :: any()
   @callback failed_response(Processor.t()) :: any()
 
-  def calculate(str, count \\ @count, mod) when is_binary(str) do
+  def calculate(str, count \\ %__MODULE__{}, mod)
+  def calculate(str, count, mod) when is_binary(str) do
     str
     |> String.codepoints()
     |> _calculate(count, mod)
@@ -49,15 +50,10 @@ defmodule ExBrackets.Processor do
     mod.success_response(count)
   end
 
-  defp _calculate([head | tail], %{open_count: 0} = count, mod) do
-    case head do
-      "(" -> _calculate(tail, add_map(count, :open_count), mod)
-      ")" -> mod.failed_response(count)
-      _ ->  _calculate(tail, count, mod)
-    end
-  end
+  defp _calculate(_, %{open_count: open, closed_count: closed} = count, mod) when open < closed, 
+    do: mod.failed_response(count)
 
-  defp _calculate([head | tail], %{open_count: open} = count, mod) when open >= 1 do
+  defp _calculate([head | tail], count, mod) do
     case head do
       "(" -> _calculate(tail, add_map(count, :open_count), mod)
       ")" -> _calculate(tail, add_map(count, :closed_count), mod)

@@ -13,8 +13,8 @@ defmodule ExBrackets do
     |> is_balanced?()
   end
 
-  def is_balanced?(%{open_count: 0}), do: false
-  def is_balanced?(%{open_count: open, closed_count: closed}) do
+  def is_balanced?(%{open_count: 0, closed_count: 0}), do: true
+  def is_balanced?(%{open_count: open, closed_count: closed} = count) do
     open == closed
   end
 end
