@@ -14,7 +14,7 @@ defmodule ExBrackets do
   end
 
   def is_balanced?(%{open_count: 0, closed_count: 0}), do: true
-  def is_balanced?(%{open_count: open, closed_count: closed} = count) do
+  def is_balanced?(%{open_count: open, closed_count: closed}) do
     open == closed
   end
 end
